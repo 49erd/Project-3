@@ -5,12 +5,13 @@
         <form ng-submit="createPost()">
           <div class="form-group">
             <textarea ng-model="question.content" class="form-control" placeholder="Ask whatever you like ..." required></textarea>
+            <input type="text" ng-model="question.img_url" placeholder="image url">
             <button type="submit" class="btn btn-primary btn-block">Ask</button>
         </form>
           </div>
         <div class="list-group">
           <a href="/question/{{question.id}}" class="list-group-item" ng-repeat="question in questions">
-            {{question.content}}
+            {{question.content}} <img src="{{question.imageUrl}}"> 
           </a>
         </div>
     </div>
