@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">Questions</div>
+        <form ng-submit="createPost()">
+          <div class="form-group">
+            <textarea ng-model="question.content" class="form-control" placeholder="Ask whatever you like ..." required></textarea>
+            <button type="submit" class="btn btn-primary btn-block">Ask</button>
+        </form>
+          </div>
+        <div class="list-group">
+          <a href="/question/{{question.id}}" class="list-group-item" ng-repeat="question in questions">
+            {{question.content}}
+          </a>
+        </div>
+    </div>
+  </div>
+</div>

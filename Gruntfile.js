@@ -21,6 +21,8 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  grunt.loadNpmTasks('grunt-angular-service');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -46,7 +48,7 @@ module.exports = function (grunt) {
       },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+        tasks: ['compass']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -220,16 +222,16 @@ module.exports = function (grunt) {
         assetCacheBuster: false,
         raw: 'Sass::Script::Number.precision = 10\n'
       },
-      dist: {
-        options: {
-          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
-        }
-      },
+      dist: {},
       server: {
         options: {
-          sourcemap: true
+          debugInfo: true
         }
       }
+    },
+
+    concat: {
+      dist: {}
     },
 
     // Renames files for browser caching purposes
@@ -280,15 +282,7 @@ module.exports = function (grunt) {
     // By default, your `index.html`'s <!-- Usemin block --> will take care of
     // minification. These next options are pre-configured if you do not wish
     // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
+
     // uglify: {
     //   dist: {
     //     files: {
@@ -297,9 +291,6 @@ module.exports = function (grunt) {
     //       ]
     //     }
     //   }
-    // },
-    // concat: {
-    //   dist: {}
     // },
 
     imagemin: {
@@ -310,6 +301,16 @@ module.exports = function (grunt) {
           src: '{,*/}*.{png,jpg,jpeg,gif}',
           dest: '<%= yeoman.dist %>/images'
         }]
+      }
+    },
+
+    cssmin: {
+      dist: {
+        files: {
+          '<%= yeoman.dist %>/styles/main.css': [
+            '.tmp/styles/{,*/}*.css'
+          ]
+        }
       }
     },
 
@@ -352,6 +353,18 @@ module.exports = function (grunt) {
           src: '*.js',
           dest: '.tmp/concat/scripts'
         }]
+      }
+    },
+
+    ngservice: {
+      convertMyLibToService: {
+        name: 'myLibService',      // First argument passed to angular.factory(), angular.service(), etc.
+        module: 'myLibModule',     // Name of Module the service is being added to.
+        exportStrategy: 'window',  // How the target library exposes its API.
+        defineModule: true,        // Define a new module?
+        files: {
+            'my_library_as_angular_service.js': 'my_library.js'
+        }
       }
     },
 
